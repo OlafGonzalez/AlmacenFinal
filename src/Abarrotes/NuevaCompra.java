@@ -5,19 +5,29 @@
  */
 package Abarrotes;
 
+import Base_Datos.Conexion;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Emir
  */
 public class NuevaCompra extends javax.swing.JFrame {
-
+      Conexion con = new Conexion();
+    PreparedStatement p=null;
+    ResultSet res, idPConsec=null, kk=null;
+    int idP_=0;
+    String queryGuardar="";
+    DefaultTableModel tot = new DefaultTableModel();
     /**
      * Creates new form NuevaCompra
      */
     public NuevaCompra() {
         initComponents();
     }
-
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -78,6 +88,11 @@ public class NuevaCompra extends javax.swing.JFrame {
 
         jbnt_agre.setBackground(new java.awt.Color(124, 77, 254));
         jbnt_agre.setText("Agregar");
+        jbnt_agre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbnt_agreActionPerformed(evt);
+            }
+        });
 
         jbtn_can.setBackground(new java.awt.Color(124, 77, 254));
         jbtn_can.setText("Cancelar");
@@ -117,28 +132,28 @@ public class NuevaCompra extends javax.swing.JFrame {
             .addGroup(jInternalFrame1Layout.createSequentialGroup()
                 .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                        .addGap(147, 147, 147)
-                        .addComponent(jbtn_fc)
-                        .addGap(108, 108, 108)
-                        .addComponent(jbtn_can))
-                    .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jInternalFrame1Layout.createSequentialGroup()
-                            .addGap(22, 22, 22)
-                            .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jlbl_n)
-                                .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                                    .addComponent(jtf_np, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(83, 83, 83)
-                                    .addComponent(txt_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jbnt_agre))))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jInternalFrame1Layout.createSequentialGroup()
-                            .addGap(49, 49, 49)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(22, 22, 22)
+                        .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlbl_n)
+                            .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                                .addComponent(jtf_np, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(83, 83, 83)
+                                .addComponent(txt_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(121, 121, 121)
+                                .addComponent(jbnt_agre))))
                     .addGroup(jInternalFrame1Layout.createSequentialGroup()
                         .addGap(235, 235, 235)
-                        .addComponent(jlb_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(60, Short.MAX_VALUE))
+                        .addComponent(jlb_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                        .addGap(129, 129, 129)
+                        .addComponent(jbtn_fc)
+                        .addGap(169, 169, 169)
+                        .addComponent(jbtn_can)))
+                .addContainerGap(48, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52))
         );
         jInternalFrame1Layout.setVerticalGroup(
             jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,24 +167,30 @@ public class NuevaCompra extends javax.swing.JFrame {
                     .addComponent(jtf_np, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbnt_agre)
                     .addComponent(txt_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
+                .addGap(26, 26, 26)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(39, 39, 39)
                 .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtn_fc)
                     .addComponent(jbtn_can))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jInternalFrame1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jInternalFrame1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jInternalFrame1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jInternalFrame1)
+                .addContainerGap())
         );
 
         pack();
@@ -186,6 +207,24 @@ public class NuevaCompra extends javax.swing.JFrame {
         Menu m= new Menu();
         m.setVisible(true);
     }//GEN-LAST:event_jbtn_fcActionPerformed
+
+    private void jbnt_agreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnt_agreActionPerformed
+                   
+       
+         String Con = "select * from Articulo where idArticulo like '"+jtf_np.getText()+"'";
+          ResultSet rs = con.getTable(Con);
+          tot.setColumnIdentifiers(new Object[]{"ID","Nombre","Precio","Cantidad"});
+          try{
+              while(rs.next()){
+                  tot.addRow(new Object[]{rs.getString("idArticulo"),rs.getString("nombre"),rs.getString("precio"),txt_cantidad.getText()});
+              }
+            jt_compra.setModel(tot);
+          }catch(Exception e){
+              System.out.println("Error en la consulta");   
+          }
+
+       
+    }//GEN-LAST:event_jbnt_agreActionPerformed
 
     /**
      * @param args the command line arguments
