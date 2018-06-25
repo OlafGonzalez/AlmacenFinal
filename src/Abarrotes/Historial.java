@@ -5,10 +5,14 @@
  */
 package Abarrotes;
 
+import com.barcodelib.barcode.QRCode;
 import com.sun.corba.se.pept.transport.Selector;
+import java.awt.Image;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -19,10 +23,52 @@ public class Historial extends javax.swing.JFrame {
     /**
      * Creates new form Historial
      */
+    int udm=0,resol=72,rot=0;
+    float mi=0.000f,md=0.000f,ms=0.000f,min=0.000f,tam=5.000f;
     public Historial() {
         initComponents();
+        this.agregarOyente();
     }
+    public void generarQR(String dato){
+        try{
+            QRCode c= new QRCode();
+            c.setData(dato);
+            c.setDataMode(QRCode.MODE_BYTE);
+            c.setUOM(udm);
+            c.setLeftMargin(mi);
+            c.setRightMargin(md);
+            c.setTopMargin(ms);
+            c.setBottomMargin(min);
+            c.setResolution(resol);
+            c.setRotate(rot);
+            c.setModuleSize(tam);
+            
+            String archivo=System.getProperty("user.home")+"/documents/AlmacenFInal/AlmacenFinal/src/qrhistorial.jpeg";
+            c.renderBarcode(archivo);
+            //Desktop d= Desktop.getDesktop();
+            //d.open(new File(archivo));
+            ImageIcon imagen=new ImageIcon("src/qrhistorial.jpeg");
+        jlbl_icono.setBounds(150,110,170,154);
+        Icon icono=new ImageIcon(imagen.getImage().getScaledInstance(jlbl_icono.getWidth(),jlbl_icono.getHeight(),Image.SCALE_DEFAULT));
+        jlbl_icono.setIcon(icono);
+        this.repaint();
+        }catch(Exception e){
+            
+        }
+    }
+    private void agregarOyente() {
+        jC_fecha.getDayChooser().addPropertyChangeListener(
+                new java.beans.PropertyChangeListener() {
 
+                    @Override
+                    public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                        if (evt.getPropertyName().compareTo("day") == 0) {
+                            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd-MM-yyyy");
+                            jT_fecha.setText(formatoDeFecha.format(jC_fecha.getDate()));
+                        }
+                    }
+                });
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,7 +87,9 @@ public class Historial extends javax.swing.JFrame {
         jbtn_cancelar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jt_historial = new javax.swing.JTable();
-        xxx = new javax.swing.JTextField();
+        jT_fecha = new javax.swing.JTextField();
+        jlbl_icono = new javax.swing.JLabel();
+        jbtn_gen = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -87,9 +135,16 @@ public class Historial extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jt_historial);
 
-        xxx.addActionListener(new java.awt.event.ActionListener() {
+        jT_fecha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                xxxActionPerformed(evt);
+                jT_fechaActionPerformed(evt);
+            }
+        });
+
+        jbtn_gen.setText("Generar");
+        jbtn_gen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtn_genActionPerformed(evt);
             }
         });
 
@@ -98,56 +153,74 @@ public class Historial extends javax.swing.JFrame {
         jIF_5Layout.setHorizontalGroup(
             jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jIF_5Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
                 .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jIF_5Layout.createSequentialGroup()
+                        .addComponent(jlbl_tipo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jIF_5Layout.createSequentialGroup()
                         .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jIF_5Layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jlbl_tipo)
-                                    .addComponent(jr_g)
-                                    .addComponent(jr_pmv)
-                                    .addComponent(jr_vg))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jIF_5Layout.createSequentialGroup()
-                                .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(xxx, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jbtn_cancelar))
-                                .addGap(50, 50, 50)))
-                        .addComponent(jC_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jIF_5Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(120, 120, 120))
+                            .addComponent(jr_g)
+                            .addComponent(jr_pmv)
+                            .addComponent(jr_vg))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jT_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbtn_cancelar))
+                        .addGap(37, 37, 37)))
+                .addComponent(jC_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(190, 190, 190))
+            .addGroup(jIF_5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jIF_5Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addComponent(jlbl_icono, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(jIF_5Layout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(jbtn_gen)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jIF_5Layout.setVerticalGroup(
             jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jIF_5Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(22, 22, 22)
                 .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jC_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jIF_5Layout.createSequentialGroup()
+                            .addComponent(jbtn_cancelar)
+                            .addGap(18, 18, 18)
+                            .addComponent(jT_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jIF_5Layout.createSequentialGroup()
+                            .addComponent(jlbl_tipo)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jr_vg)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jr_pmv)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jr_g))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jIF_5Layout.createSequentialGroup()
-                        .addComponent(jlbl_tipo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jr_vg)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jr_pmv)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jr_g)
-                        .addGap(22, 22, 22)
-                        .addComponent(jbtn_cancelar)
-                        .addGap(18, 18, 18)
-                        .addComponent(xxx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jIF_5Layout.createSequentialGroup()
+                        .addComponent(jbtn_gen)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                        .addComponent(jlbl_icono, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(96, 96, 96))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jIF_5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jIF_5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,7 +242,7 @@ public class Historial extends javax.swing.JFrame {
         String formato = "dd/MM/yyyy";
         java.util.Date date = jC_fecha.getDate();
         SimpleDateFormat jds = new SimpleDateFormat(formato);
-        xxx.setText(jds.format(date));
+        jT_fecha.setText(jds.format(date));
         
         
     }//GEN-LAST:event_jC_fechaMouseClicked
@@ -178,10 +251,15 @@ public class Historial extends javax.swing.JFrame {
     
     }//GEN-LAST:event_jC_fechaMouseEntered
 
-    private void xxxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xxxActionPerformed
+    private void jT_fechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jT_fechaActionPerformed
         
         
-    }//GEN-LAST:event_xxxActionPerformed
+    }//GEN-LAST:event_jT_fechaActionPerformed
+
+    private void jbtn_genActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_genActionPerformed
+        String campo= jT_fecha.getText();
+        generarQR(campo);
+    }//GEN-LAST:event_jbtn_genActionPerformed
 
     /**
      * @param args the command line arguments
@@ -222,12 +300,14 @@ public class Historial extends javax.swing.JFrame {
     private com.toedter.calendar.JCalendar jC_fecha;
     private javax.swing.JInternalFrame jIF_5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jT_fecha;
     private javax.swing.JButton jbtn_cancelar;
+    private javax.swing.JButton jbtn_gen;
+    private javax.swing.JLabel jlbl_icono;
     private javax.swing.JLabel jlbl_tipo;
     private javax.swing.JRadioButton jr_g;
     private javax.swing.JRadioButton jr_pmv;
     private javax.swing.JRadioButton jr_vg;
     private javax.swing.JTable jt_historial;
-    private javax.swing.JTextField xxx;
     // End of variables declaration//GEN-END:variables
 }
