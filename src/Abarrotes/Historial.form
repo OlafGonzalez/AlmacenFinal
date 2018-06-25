@@ -78,16 +78,17 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="522" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace pref="26" max="32767" attributes="0"/>
+                  <EmptySpace pref="26" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
                           <Component id="jlbl_icono" min="-2" pref="170" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
                           <Component id="jbtn_gen" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jbtn_pdf" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -123,8 +124,11 @@
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
-                          <Component id="jbtn_gen" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="49" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jbtn_gen" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jbtn_pdf" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="69" max="32767" attributes="0"/>
                           <Component id="jlbl_icono" min="-2" pref="160" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
                       </Group>
@@ -201,11 +205,16 @@
         </Component>
         <Component class="javax.swing.JButton" name="jbtn_gen">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Generar"/>
+            <Property name="text" type="java.lang.String" value="QR"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtn_genActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jbtn_pdf">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="PDF"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

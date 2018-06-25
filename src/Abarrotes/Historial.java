@@ -8,6 +8,7 @@ package Abarrotes;
 import com.barcodelib.barcode.QRCode;
 import com.sun.corba.se.pept.transport.Selector;
 import java.awt.Image;
+import java.text.DateFormat;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
@@ -69,6 +70,20 @@ public class Historial extends javax.swing.JFrame {
                     }
                 });
     }
+    public void pdf(){
+        String ruta="C:\\users\\Emir\\DOcuments\\AlmacenFinal\\AlmacenFinal\\PDF";
+        String valor="HOLA";
+        /*Codigo hora actual*/
+        DateFormat df=new SimpleDateFormat("MM/dd/yyyy:HH:mm:ss");
+        //Date today=jC_fecha.getInstance().getTime();
+        //String reportDate = df.format(today);
+        //System.out.println("Report Date: "+reportDate);
+        try{
+            
+        }catch(Exception e){
+            
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -90,6 +105,7 @@ public class Historial extends javax.swing.JFrame {
         jT_fecha = new javax.swing.JTextField();
         jlbl_icono = new javax.swing.JLabel();
         jbtn_gen = new javax.swing.JButton();
+        jbtn_pdf = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -141,12 +157,14 @@ public class Historial extends javax.swing.JFrame {
             }
         });
 
-        jbtn_gen.setText("Generar");
+        jbtn_gen.setText("QR");
         jbtn_gen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtn_genActionPerformed(evt);
             }
         });
+
+        jbtn_pdf.setText("PDF");
 
         javax.swing.GroupLayout jIF_5Layout = new javax.swing.GroupLayout(jIF_5.getContentPane());
         jIF_5.getContentPane().setLayout(jIF_5Layout);
@@ -173,15 +191,16 @@ public class Historial extends javax.swing.JFrame {
             .addGroup(jIF_5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jIF_5Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                         .addComponent(jlbl_icono, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(jIF_5Layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
                         .addComponent(jbtn_gen)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbtn_pdf)
+                        .addGap(39, 39, 39))))
         );
         jIF_5Layout.setVerticalGroup(
             jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,8 +227,10 @@ public class Historial extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jIF_5Layout.createSequentialGroup()
-                        .addComponent(jbtn_gen)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                        .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbtn_gen)
+                            .addComponent(jbtn_pdf))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                         .addComponent(jlbl_icono, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(96, 96, 96))))
         );
@@ -303,6 +324,7 @@ public class Historial extends javax.swing.JFrame {
     private javax.swing.JTextField jT_fecha;
     private javax.swing.JButton jbtn_cancelar;
     private javax.swing.JButton jbtn_gen;
+    private javax.swing.JButton jbtn_pdf;
     private javax.swing.JLabel jlbl_icono;
     private javax.swing.JLabel jlbl_tipo;
     private javax.swing.JRadioButton jr_g;
