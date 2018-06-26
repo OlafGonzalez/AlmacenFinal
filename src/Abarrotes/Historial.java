@@ -6,14 +6,21 @@
 package Abarrotes;
 
 import com.barcodelib.barcode.QRCode;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.sun.corba.se.pept.transport.Selector;
+import java.awt.Desktop;
 import java.awt.Image;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.DateFormat;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -71,17 +78,25 @@ public class Historial extends javax.swing.JFrame {
                 });
     }
     public void pdf(){
-        String ruta="C:\\users\\Emir\\DOcuments\\AlmacenFinal\\AlmacenFinal\\PDF";
+        String ruta="C:\\users\\Emir\\Documents\\AlmacenFinal\\AlmacenFinal\\PDF\\";
+        String ruta2="C:\\users\\Emir\\Documents\\AlmacenFinal\\AlmacenFinal\\PDF\\archivo.pdf";
         String valor="HOLA";
         /*Codigo hora actual*/
         DateFormat df=new SimpleDateFormat("MM/dd/yyyy:HH:mm:ss");
-        //Date today=jC_fecha.getInstance().getTime();
         //String reportDate = df.format(today);
         //System.out.println("Report Date: "+reportDate);
         try{
-            
+            FileOutputStream archivo = new FileOutputStream(ruta+"archivo.pdf");
+            Document doc = new Document();
+            PdfWriter.getInstance(doc,archivo);
+            doc.open();
+            doc.add(new Paragraph(valor+"\n\n"));
+            doc.close();
+            JOptionPane.showMessageDialog(null,"PDF generado correctamente");
+            Desktop d= Desktop.getDesktop();
+            d.open(new File(ruta2));
         }catch(Exception e){
-            
+            System.out.println("ERROR"+e);
         }
     }
     /**
@@ -165,6 +180,11 @@ public class Historial extends javax.swing.JFrame {
         });
 
         jbtn_pdf.setText("PDF");
+        jbtn_pdf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtn_pdfActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jIF_5Layout = new javax.swing.GroupLayout(jIF_5.getContentPane());
         jIF_5.getContentPane().setLayout(jIF_5Layout);
@@ -230,7 +250,7 @@ public class Historial extends javax.swing.JFrame {
                         .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jbtn_gen)
                             .addComponent(jbtn_pdf))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                         .addComponent(jlbl_icono, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(96, 96, 96))))
         );
@@ -281,6 +301,10 @@ public class Historial extends javax.swing.JFrame {
         String campo= jT_fecha.getText();
         generarQR(campo);
     }//GEN-LAST:event_jbtn_genActionPerformed
+
+    private void jbtn_pdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_pdfActionPerformed
+        pdf();
+    }//GEN-LAST:event_jbtn_pdfActionPerformed
 
     /**
      * @param args the command line arguments

@@ -128,7 +128,7 @@
                               <Component id="jbtn_gen" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jbtn_pdf" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="69" max="32767" attributes="0"/>
+                          <EmptySpace pref="73" max="32767" attributes="0"/>
                           <Component id="jlbl_icono" min="-2" pref="160" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
                       </Group>
@@ -215,6 +215,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="PDF"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtn_pdfActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
