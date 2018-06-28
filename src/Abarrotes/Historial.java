@@ -5,6 +5,7 @@
  */
 package Abarrotes;
 
+import Base_Datos.Conexion;
 import com.barcodelib.barcode.QRCode;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
@@ -14,6 +15,8 @@ import java.awt.Desktop;
 import java.awt.Image;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -21,13 +24,16 @@ import java.util.TimeZone;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  *
  */
 public class Historial extends javax.swing.JFrame {
-
+ Conexion con = new Conexion();
+    PreparedStatement st=null;
+    ResultSet res, idPConsec=null, kk=null;
     /**
      * Creates new form Historial
      */
@@ -36,6 +42,21 @@ public class Historial extends javax.swing.JFrame {
     public Historial() {
         initComponents();
         this.agregarOyente();
+        articulos();
+    }
+    
+    public void articulos(){
+       DefaultTableModel articulos = new DefaultTableModel();
+        ResultSet rs = con.getTable("select * from Articulo");
+        articulos.setColumnIdentifiers(new Object[]{"ID","Nombre","Precio","Categoria","Stock Minimo","Stock Actual"});
+        try {
+            while(rs.next()){
+                articulos.addRow(new Object[]{rs.getString("idArticulo"),rs.getString("nombre"),rs.getString("precio"),rs.getString("categoria"),rs.getString("StockMini"),rs.getString("Stock")});
+            }
+            jt_historial.setModel(articulos);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
     public void generarQR(String dato){
         try{
@@ -196,22 +217,25 @@ public class Historial extends javax.swing.JFrame {
                     .addGroup(jIF_5Layout.createSequentialGroup()
                         .addComponent(jlbl_tipo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jIF_5Layout.createSequentialGroup()
-                        .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jr_g)
-                            .addComponent(jr_pmv)
-                            .addComponent(jr_vg))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jT_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbtn_cancelar))
-                        .addGap(37, 37, 37)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jIF_5Layout.createSequentialGroup()
+                        .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jIF_5Layout.createSequentialGroup()
+                                .addComponent(jr_g)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jT_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jIF_5Layout.createSequentialGroup()
+                                .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jr_pmv)
+                                    .addComponent(jr_vg))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jbtn_cancelar)))
+                        .addGap(47, 47, 47)))
                 .addComponent(jC_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(190, 190, 190))
             .addGroup(jIF_5Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(59, 59, 59)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jIF_5Layout.createSequentialGroup()
                         .addComponent(jlbl_icono, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -228,31 +252,30 @@ public class Historial extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jC_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jIF_5Layout.createSequentialGroup()
-                            .addComponent(jbtn_cancelar)
-                            .addGap(18, 18, 18)
-                            .addComponent(jT_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jIF_5Layout.createSequentialGroup()
-                            .addComponent(jlbl_tipo)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jr_vg)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jr_pmv)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jr_g))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jIF_5Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jIF_5Layout.createSequentialGroup()
+                                .addComponent(jlbl_tipo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jr_vg)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jr_pmv))
+                            .addComponent(jbtn_cancelar, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jr_g))
+                    .addComponent(jT_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jIF_5Layout.createSequentialGroup()
                         .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jbtn_gen)
                             .addComponent(jbtn_pdf))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                         .addComponent(jlbl_icono, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(96, 96, 96))))
+                        .addGap(96, 96, 96))
+                    .addGroup(jIF_5Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -280,11 +303,6 @@ public class Historial extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtn_cancelarActionPerformed
 
     private void jC_fechaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jC_fechaMouseClicked
-        String formato = "dd/MM/yyyy";
-        java.util.Date date = jC_fecha.getDate();
-        SimpleDateFormat jds = new SimpleDateFormat(formato);
-        jT_fecha.setText(jds.format(date));
-        
         
     }//GEN-LAST:event_jC_fechaMouseClicked
 

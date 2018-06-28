@@ -8,6 +8,7 @@ package Abarrotes;
 import Base_Datos.Conexion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,11 +17,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class NuevaCompra extends javax.swing.JFrame {
       Conexion con = new Conexion();
-    PreparedStatement p=null;
+    PreparedStatement st=null;
     ResultSet res, idPConsec=null, kk=null;
     int idP_=0;
+    float total=0;
     String queryGuardar="";
     DefaultTableModel tot = new DefaultTableModel();
+    
     /**
      * Creates new form NuevaCompra
      */
@@ -51,6 +54,8 @@ public class NuevaCompra extends javax.swing.JFrame {
         jt_compra = new javax.swing.JTable();
         jlb_cantidad = new javax.swing.JLabel();
         txt_cantidad = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        txt_total = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -125,6 +130,10 @@ public class NuevaCompra extends javax.swing.JFrame {
 
         jlb_cantidad.setText("Cantidad:");
 
+        jLabel1.setText("Total");
+
+        txt_total.setEditable(false);
+
         javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
         jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
         jInternalFrame1Layout.setHorizontalGroup(
@@ -136,20 +145,24 @@ public class NuevaCompra extends javax.swing.JFrame {
                         .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jlbl_n)
                             .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                                .addGap(213, 213, 213)
+                                .addComponent(jlb_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jInternalFrame1Layout.createSequentialGroup()
                                 .addComponent(jtf_np, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(83, 83, 83)
-                                .addComponent(txt_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(121, 121, 121)
-                                .addComponent(jbnt_agre))))
+                                .addComponent(txt_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(48, 55, Short.MAX_VALUE)
+                        .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_total, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(31, 31, 31)
+                        .addComponent(jbnt_agre))
                     .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                        .addGap(235, 235, 235)
-                        .addComponent(jlb_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                        .addGap(129, 129, 129)
+                        .addGap(78, 78, 78)
                         .addComponent(jbtn_fc)
-                        .addGap(169, 169, 169)
+                        .addGap(220, 220, 220)
                         .addComponent(jbtn_can)))
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addGap(17, 17, 17))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -161,19 +174,22 @@ public class NuevaCompra extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlbl_n)
-                    .addComponent(jlb_cantidad))
+                    .addComponent(jlb_cantidad)
+                    .addComponent(jLabel1))
                 .addGap(18, 18, 18)
-                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtf_np, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbnt_agre)
-                    .addComponent(txt_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jtf_np, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbnt_agre)
+                        .addComponent(txt_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_total, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
                 .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtn_fc)
                     .addComponent(jbtn_can))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -201,29 +217,41 @@ public class NuevaCompra extends javax.swing.JFrame {
         Menu m= new Menu();
         m.setVisible(true);
     }//GEN-LAST:event_jbtn_canActionPerformed
-
+//Finalizar Compra/Venta
     private void jbtn_fcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_fcActionPerformed
-        this.setVisible(false);
-        Menu m= new Menu();
-        m.setVisible(true);
+         int cols = tot.getColumnCount();
+         int fila = tot.getRowCount();   
+         float valor =0;        
+    
+    for (int i = 0; i < fila; i++) {
+     valor = (float) tot.getValueAt(i,4);
+     total = total + valor;
+}
+    String Resultado = Integer.toString((int) total);
+    txt_total.setText(Resultado);
+    
+    
+       
+
     }//GEN-LAST:event_jbtn_fcActionPerformed
-
+    //Agregar productos  a la lista 
     private void jbnt_agreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnt_agreActionPerformed
-                   
-       
+        String valores="";
+        int valor = 0;
+        float precio = Integer.parseInt(txt_cantidad.getText());
          String Con = "select * from Articulo where idArticulo like '"+jtf_np.getText()+"'";
-          ResultSet rs = con.getTable(Con);
-          tot.setColumnIdentifiers(new Object[]{"ID","Nombre","Precio","Cantidad"});
-          try{
+         ResultSet rs = con.getTable(Con);
+         tot.setColumnIdentifiers(new Object[]{"ID","Nombre","Precio","Cantidad","Total de Articulos"});
+ 
+         try{
               while(rs.next()){
-                  tot.addRow(new Object[]{rs.getString("idArticulo"),rs.getString("nombre"),rs.getString("precio"),txt_cantidad.getText()});
+                  tot.addRow(new Object[]{rs.getString("idArticulo"),rs.getString("nombre"),rs.getString("precio"),txt_cantidad.getText(),rs.getFloat("precio")*precio});  
               }
-            jt_compra.setModel(tot);
+          jt_compra.setModel(tot);
           }catch(Exception e){
-              System.out.println("Error en la consulta");   
+              System.out.println("Error en la consulta"+Con);
           }
-
-       
+            
     }//GEN-LAST:event_jbnt_agreActionPerformed
 
     /**
@@ -263,6 +291,7 @@ public class NuevaCompra extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JInternalFrame jInternalFrame1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -276,5 +305,6 @@ public class NuevaCompra extends javax.swing.JFrame {
     private javax.swing.JTable jt_compra;
     private javax.swing.JTextField jtf_np;
     private javax.swing.JTextField txt_cantidad;
+    private javax.swing.JTextField txt_total;
     // End of variables declaration//GEN-END:variables
 }
