@@ -8,7 +8,11 @@ package Abarrotes;
 import Base_Datos.Conexion;
 import com.barcodelib.barcode.QRCode;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.sun.corba.se.pept.transport.Selector;
 import java.awt.Desktop;
@@ -100,19 +104,38 @@ public class Historial extends javax.swing.JFrame {
                 });
     }
     public void pdf(){
-        String ruta="C:\\users\\Emir\\Documents\\AlmacenFinal\\AlmacenFinal\\PDF\\";
-        String ruta2="C:\\users\\Emir\\Documents\\AlmacenFinal\\AlmacenFinal\\PDF\\archivo.pdf";
-        String valor="HOLA";
+        String ruta="C:\\Users\\FLAKO\\Documents\\Almacen clone\\AlmacenFinal\\";
+        String ruta2="C:\\Users\\FLAKO\\Documents\\Almacen clone\\AlmacenFinal\\AlmacenFinalarchivo.pdf";
+        String valor="bss";
         /*Codigo hora actual*/
         DateFormat df=new SimpleDateFormat("MM/dd/yyyy:HH:mm:ss");
         //String reportDate = df.format(today);
         //System.out.println("Report Date: "+reportDate);
         try{
-            FileOutputStream archivo = new FileOutputStream(ruta+"archivo.pdf");
+            FileOutputStream archivo = new FileOutputStream(ruta+"AlmacenFinalarchivo.pdf");
             Document doc = new Document();
             PdfWriter.getInstance(doc,archivo);
             doc.open();
             doc.add(new Paragraph(valor+"\n\n"));
+            
+            PdfPTable table = new PdfPTable(jt_historial.getColumnCount());
+            PdfPCell columnHeader;
+       
+            for (int column = 0; column <jt_historial.getColumnCount(); column++) {
+                columnHeader = new PdfPCell(new Phrase(new Phrase(jt_historial.getColumnName(column))));
+                columnHeader.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(columnHeader);
+            
+            }
+            table.setHeaderRows(1);
+            for (int row = 0; row <jt_historial.getRowCount(); row++) {
+                for (int column = 0; column < jt_historial.getColumnCount(); column++) {
+                    table.addCell(jt_historial.getValueAt(row, column).toString());
+                    
+                }
+            }
+           doc.add(table);
+            
             doc.close();
             JOptionPane.showMessageDialog(null,"PDF generado correctamente");
             Desktop d= Desktop.getDesktop();
