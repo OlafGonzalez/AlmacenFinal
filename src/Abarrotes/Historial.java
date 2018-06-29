@@ -28,6 +28,8 @@ import java.util.TimeZone;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.table.DefaultTableModel;
 //Hi
 
@@ -47,20 +49,22 @@ public class Historial extends javax.swing.JFrame {
     public Historial() {
         initComponents();
         this.agregarOyente();
-        articulos();
+       
+        jT_fecha.setVisible(false);
     }
     
-    public void articulos(){
+    public void articulos(JTextField obJTextPane){
        DefaultTableModel articulos = new DefaultTableModel();
-        ResultSet rs = con.getTable("select * from Articulo");
-        articulos.setColumnIdentifiers(new Object[]{"ID","Nombre","Precio","Categoria","Stock Minimo","Stock Actual"});
+       String ff = "select * from Compra where fecha like '"+obJTextPane.getText()+"'";
+        ResultSet rs = con.getTable(ff);
+        articulos.setColumnIdentifiers(new Object[]{"ID","fecha","total"});
         try {
             while(rs.next()){
-                articulos.addRow(new Object[]{rs.getString("idArticulo"),rs.getString("nombre"),rs.getString("precio"),rs.getString("categoria"),rs.getString("StockMini"),rs.getString("Stock")});
+                articulos.addRow(new Object[]{rs.getString("idCompra"),rs.getString("fecha"),rs.getString("total")});
             }
             jt_historial.setModel(articulos);
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("Eror: "+ff);
         }
     }
     public void generarQR(String dato){
@@ -97,12 +101,15 @@ public class Historial extends javax.swing.JFrame {
                     @Override
                     public void propertyChange(java.beans.PropertyChangeEvent evt) {
                         if (evt.getPropertyName().compareTo("day") == 0) {
-                            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd-MM-yyyy");
+                            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("yyyy-MM-dd");
                             jT_fecha.setText(formatoDeFecha.format(jC_fecha.getDate()));
+                             articulos(jT_fecha);
                         }
                     }
                 });
     }
+    
+    
     public void pdf(){
         String ruta="C:\\Users\\FLAKO\\Documents\\Almacen clone\\AlmacenFinal\\";
         String ruta2="C:\\Users\\FLAKO\\Documents\\Almacen clone\\AlmacenFinal\\AlmacenFinalarchivo.pdf";
@@ -154,9 +161,6 @@ public class Historial extends javax.swing.JFrame {
     private void initComponents() {
 
         jIF_5 = new javax.swing.JInternalFrame();
-        jr_vg = new javax.swing.JRadioButton();
-        jr_pmv = new javax.swing.JRadioButton();
-        jr_g = new javax.swing.JRadioButton();
         jlbl_tipo = new javax.swing.JLabel();
         jC_fecha = new com.toedter.calendar.JCalendar();
         jbtn_cancelar = new javax.swing.JButton();
@@ -166,18 +170,14 @@ public class Historial extends javax.swing.JFrame {
         jlbl_icono = new javax.swing.JLabel();
         jbtn_gen = new javax.swing.JButton();
         jbtn_pdf = new javax.swing.JButton();
+        jcmb_Tipo = new javax.swing.JComboBox<>();
+        txt_cambiotipo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jIF_5.setBackground(new java.awt.Color(8, 188, 212));
         jIF_5.setTitle("Historial");
         jIF_5.setVisible(true);
-
-        jr_vg.setText("Ventas Generales");
-
-        jr_pmv.setText("Producto más vendido");
-
-        jr_g.setText("Ganancias");
 
         jlbl_tipo.setText("Tipo:");
 
@@ -216,6 +216,11 @@ public class Historial extends javax.swing.JFrame {
                 jT_fechaActionPerformed(evt);
             }
         });
+        jT_fecha.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jT_fechaPropertyChange(evt);
+            }
+        });
 
         jbtn_gen.setText("QR");
         jbtn_gen.addActionListener(new java.awt.event.ActionListener() {
@@ -231,29 +236,45 @@ public class Historial extends javax.swing.JFrame {
             }
         });
 
+        jcmb_Tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tipo", "Ventas Generales", "Ganancias", "Producto mas Vendido" }));
+        jcmb_Tipo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jcmb_TipoItemStateChanged(evt);
+            }
+        });
+        jcmb_Tipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcmb_TipoActionPerformed(evt);
+            }
+        });
+        jcmb_Tipo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jcmb_TipoPropertyChange(evt);
+            }
+        });
+
         javax.swing.GroupLayout jIF_5Layout = new javax.swing.GroupLayout(jIF_5.getContentPane());
         jIF_5.getContentPane().setLayout(jIF_5Layout);
         jIF_5Layout.setHorizontalGroup(
             jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jIF_5Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
                 .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jIF_5Layout.createSequentialGroup()
-                        .addComponent(jlbl_tipo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jIF_5Layout.createSequentialGroup()
-                        .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jIF_5Layout.createSequentialGroup()
-                                .addComponent(jr_g)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jT_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jIF_5Layout.createSequentialGroup()
-                                .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jr_pmv)
-                                    .addComponent(jr_vg))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jbtn_cancelar)))
-                        .addGap(47, 47, 47)))
+                        .addGap(33, 33, 33)
+                        .addComponent(jcmb_Tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(jIF_5Layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(jlbl_tipo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jT_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jIF_5Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_cambiotipo)
+                            .addComponent(jbtn_cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(37, 37, 37)
                 .addComponent(jC_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(190, 190, 190))
             .addGroup(jIF_5Layout.createSequentialGroup()
@@ -273,22 +294,20 @@ public class Historial extends javax.swing.JFrame {
         jIF_5Layout.setVerticalGroup(
             jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jIF_5Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jC_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jIF_5Layout.createSequentialGroup()
-                        .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jIF_5Layout.createSequentialGroup()
-                                .addComponent(jlbl_tipo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jr_vg)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jr_pmv))
-                            .addComponent(jbtn_cancelar, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jr_g))
-                    .addComponent(jT_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jIF_5Layout.createSequentialGroup()
+                        .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jlbl_tipo)
+                            .addComponent(jT_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jcmb_Tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbtn_cancelar))
+                        .addGap(18, 18, 18)
+                        .addComponent(txt_cambiotipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jC_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
                 .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jIF_5Layout.createSequentialGroup()
                         .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -307,14 +326,16 @@ public class Historial extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jIF_5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jIF_5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -348,6 +369,24 @@ public class Historial extends javax.swing.JFrame {
         pdf();
     }//GEN-LAST:event_jbtn_pdfActionPerformed
 
+    private void jT_fechaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jT_fechaPropertyChange
+       
+        
+        
+    }//GEN-LAST:event_jT_fechaPropertyChange
+
+    private void jcmb_TipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcmb_TipoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcmb_TipoActionPerformed
+
+    private void jcmb_TipoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jcmb_TipoPropertyChange
+        txt_cambiotipo.setText(jcmb_Tipo.getSelectedItem().toString());
+    }//GEN-LAST:event_jcmb_TipoPropertyChange
+
+    private void jcmb_TipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcmb_TipoItemStateChanged
+         txt_cambiotipo.setText(jcmb_Tipo.getSelectedItem().toString());
+    }//GEN-LAST:event_jcmb_TipoItemStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -379,6 +418,7 @@ public class Historial extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Historial().setVisible(true);
+                
             }
         });
     }
@@ -391,11 +431,10 @@ public class Historial extends javax.swing.JFrame {
     private javax.swing.JButton jbtn_cancelar;
     private javax.swing.JButton jbtn_gen;
     private javax.swing.JButton jbtn_pdf;
+    private javax.swing.JComboBox<String> jcmb_Tipo;
     private javax.swing.JLabel jlbl_icono;
     private javax.swing.JLabel jlbl_tipo;
-    private javax.swing.JRadioButton jr_g;
-    private javax.swing.JRadioButton jr_pmv;
-    private javax.swing.JRadioButton jr_vg;
     private javax.swing.JTable jt_historial;
+    private javax.swing.JTextField txt_cambiotipo;
     // End of variables declaration//GEN-END:variables
 }
