@@ -22,9 +22,8 @@ import javax.swing.JOptionPane;
  */
 public class Agregar extends javax.swing.JFrame {
     Conexion con = new Conexion();
-    PreparedStatement p = null;
+    PreparedStatement st = null;
     ResultSet rs , idAconse = null, kk = null;
-    int idA =1; 
     Validaciones ex = new Validaciones();
     /**
      * Creates new form Agregar
@@ -213,22 +212,11 @@ public class Agregar extends javax.swing.JFrame {
 
     private void jbtn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_guardarActionPerformed
         
-        try {
-        p=con.obtenerConexion().prepareStatement("select max(idArticulo)+1 from Articulo");
-        idAconse = p.executeQuery();
-        
-            while (idAconse.next()) {                
-                idA = idAconse.getInt(1);
-            }
-        } catch (Exception e) {
-            System.out.println("ERROR EN id Articulo");
-        }
          try{
              int guardar;
-             p=con.obtenerConexion().prepareStatement
-             ("INSERT INTO Articulo(idArticulo,nombre,precio,categoria,StockMini,Stock)"+ 
-                      "values('"+idA+"','"+jtf_nom.getText()+"','"+jtf_precio.getText()+"','"+jCB_tipo.getSelectedItem().toString()+"','"+jtf_Cantidad1.getText()+"','"+jtf_actualCantidad.getText()+"');");
-             guardar = p.executeUpdate();
+             st=con.obtenerConexion().prepareStatement
+             ("INSERT INTO Articulo(idArticulo,nombre,precio,categoria,StockMini,Stock)values("+null+",'"+jtf_nom.getText()+"','"+jtf_precio.getText()+"','"+jCB_tipo.getSelectedItem().toString()+"','"+jtf_Cantidad1.getText()+"','"+jtf_actualCantidad.getText()+"');");
+             guardar = st.executeUpdate();
               if (guardar > 0)
                     {
                        System.out.println(" SE INSERTO producto");

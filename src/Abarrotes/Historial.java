@@ -24,6 +24,8 @@ import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.TimeZone;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -31,6 +33,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.table.DefaultTableModel;
+
 //Hi
 
 /**
@@ -40,7 +43,15 @@ import javax.swing.table.DefaultTableModel;
 public class Historial extends javax.swing.JFrame {
  Conexion con = new Conexion();
     PreparedStatement st=null;
-    ResultSet res, idPConsec=null, kk=null;
+    ResultSet res, idPConsec=null, kk=null,rs;
+    Calendar fecha = new GregorianCalendar();
+    String Consulta,Tipo;
+    Object colum = new Object();
+    Object result = new Object();
+     int ano = fecha.get(Calendar.YEAR);
+     int mes = fecha.get(Calendar.MONTH);
+     int dia = fecha.get(Calendar.DAY_OF_MONTH);
+     int mes2 = mes+2;
     /**
      * Creates new form Historial
      */
@@ -49,24 +60,10 @@ public class Historial extends javax.swing.JFrame {
     public Historial() {
         initComponents();
         this.agregarOyente();
-       
-        jT_fecha.setVisible(false);
+        jT_fecha.setVisible(true);
     }
     
-    public void articulos(JTextField obJTextPane){
-       DefaultTableModel articulos = new DefaultTableModel();
-       String ff = "select * from Compra where fecha like '"+obJTextPane.getText()+"'";
-        ResultSet rs = con.getTable(ff);
-        articulos.setColumnIdentifiers(new Object[]{"ID","fecha","total"});
-        try {
-            while(rs.next()){
-                articulos.addRow(new Object[]{rs.getString("idCompra"),rs.getString("fecha"),rs.getString("total")});
-            }
-            jt_historial.setModel(articulos);
-        } catch (Exception e) {
-            System.out.println("Eror: "+ff);
-        }
-    }
+    
     public void generarQR(String dato){
         try{
             QRCode c= new QRCode();
@@ -103,7 +100,8 @@ public class Historial extends javax.swing.JFrame {
                         if (evt.getPropertyName().compareTo("day") == 0) {
                             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("yyyy-MM-dd");
                             jT_fecha.setText(formatoDeFecha.format(jC_fecha.getDate()));
-                             articulos(jT_fecha);
+                            //ejecuta consulta 
+                           
                         }
                     }
                 });
@@ -236,7 +234,7 @@ public class Historial extends javax.swing.JFrame {
             }
         });
 
-        jcmb_Tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tipo", "Ventas Generales", "Ganancias", "Producto mas Vendido" }));
+        jcmb_Tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tipo", "Ventas Generales", "Compras Generales", "Producto mas Vendido", "Ventas Diarias", "Ventas Mensuales", " " }));
         jcmb_Tipo.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jcmb_TipoItemStateChanged(evt);
@@ -258,27 +256,27 @@ public class Historial extends javax.swing.JFrame {
         jIF_5Layout.setHorizontalGroup(
             jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jIF_5Layout.createSequentialGroup()
-                .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jIF_5Layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(jcmb_Tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jIF_5Layout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addComponent(jlbl_tipo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jT_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jT_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jIF_5Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(txt_cambiotipo, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(52, 52, 52))
                     .addGroup(jIF_5Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txt_cambiotipo)
-                            .addComponent(jbtn_cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(37, 37, 37)
+                        .addContainerGap()
+                        .addComponent(jcmb_Tipo, 0, 1, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jbtn_cancelar)
+                        .addGap(3, 3, 3)))
                 .addComponent(jC_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(190, 190, 190))
+                .addGap(175, 175, 175))
             .addGroup(jIF_5Layout.createSequentialGroup()
-                .addGap(59, 59, 59)
+                .addGap(90, 90, 90)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -297,10 +295,10 @@ public class Historial extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jIF_5Layout.createSequentialGroup()
-                        .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jlbl_tipo)
-                            .addComponent(jT_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jT_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlbl_tipo, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jcmb_Tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jbtn_cancelar))
@@ -317,6 +315,7 @@ public class Historial extends javax.swing.JFrame {
                         .addComponent(jlbl_icono, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(96, 96, 96))
                     .addGroup(jIF_5Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
@@ -370,9 +369,7 @@ public class Historial extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtn_pdfActionPerformed
 
     private void jT_fechaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jT_fechaPropertyChange
-       
-        
-        
+              
     }//GEN-LAST:event_jT_fechaPropertyChange
 
     private void jcmb_TipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcmb_TipoActionPerformed
@@ -384,9 +381,112 @@ public class Historial extends javax.swing.JFrame {
     }//GEN-LAST:event_jcmb_TipoPropertyChange
 
     private void jcmb_TipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcmb_TipoItemStateChanged
-         txt_cambiotipo.setText(jcmb_Tipo.getSelectedItem().toString());
+
+    switch(jcmb_Tipo.getSelectedItem().toString()){
+       
+        case "Ventas Generales":
+         Tipo = "Ventas Generales";
+         Consulta = "select nombre,precio,cantidad,fecha from articulo, DetalleV where articulo.idArticulo=DetalleV.idArticulo and fecha like '"+jT_fecha.getText()+"';";
+         Consultas(Consulta, jT_fecha);
+         System.out.println(Consulta);
+            break;
+        case "Compras Generales":
+         Tipo = "Compras Generales";
+         Consulta = "select nombre,precio,cantidad,fecha from articulo, DetalleC where articulo.idArticulo=DetalleC.idArticulo and fecha like '"+jT_fecha.getText()+"';";
+            Consultas(Consulta, jT_fecha);
+         System.out.println(Consulta);
+            break;
+        case "Producto mas Vendido":
+            Tipo = "Producto mas Vendido";
+            Consulta = "select nombre,sum(Cantidad),fecha from DetalleV, Articulo where DetalleV.idArticulo=Articulo.idArticulo and fecha like'"+jT_fecha.getText()+"' group by nombre limit 1;";
+            System.out.println(Consulta);
+            Consultas(Consulta, jT_fecha);
+            break;
+        case "Ventas Diarias":
+            Tipo = "Ventas Diarias";
+            Consulta = "select count(a.idVenta) as Ventas, sum(total) as Total from Venta as a,DetalleV as b where a.idVenta=b.idVenta and fecha like '"+jT_fecha.getText()+"';";
+            Consultas(Consulta, jT_fecha);
+            break;
+        case "Ventas Mensuales":
+            Tipo = "Ventas Mensuales";
+            Consulta = "select count(a.idVenta) as Ventas, sum(total) as Total from Venta as a,DetalleV as b where a.idVenta=b.idVenta and fecha <= '"+jT_fecha.getText()+"' or fecha >= '"+ano+"-0"+mes2+"-0"+dia+"';";
+            System.out.println(Consulta);
+            Consultas(Consulta, jT_fecha);
+            break;
+         
+    }
     }//GEN-LAST:event_jcmb_TipoItemStateChanged
 
+    public void Consultas(String Consulta,JTextField fecha){
+        DefaultTableModel articulos = new DefaultTableModel();
+        switch(Tipo){
+            
+        case "Ventas Generales":
+        rs = con.getTable(Consulta);
+        articulos.setColumnIdentifiers(new Object []{"nombre","precio","cantidad","fecha"});
+        try {
+            while(rs.next()){
+                articulos.addRow(new Object[]{rs.getString("nombre"),rs.getString("precio"),rs.getString("cantidad"),rs.getString("fecha")});
+            }
+            jt_historial.setModel(articulos);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+                break;
+                
+        case "Compras Generales":
+        rs = con.getTable(Consulta);
+        articulos.setColumnIdentifiers(new Object []{"nombre","precio","cantidad","fecha"});
+        try {
+            while(rs.next()){
+                articulos.addRow(new Object[]{rs.getString("nombre"),rs.getString("precio"),rs.getString("cantidad"),rs.getString("fecha")});
+            }
+            jt_historial.setModel(articulos);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+            break;
+            
+        case "Producto mas Vendido":
+            rs = con.getTable(Consulta);
+            articulos.setColumnIdentifiers(new Object[]{"nombre","cantidad","fecha"});
+            try {
+                while (rs.next()) {                    
+                    articulos.addRow(new Object[]{rs.getString("nombre"),rs.getString("SUM(Cantidad)"),rs.getString("fecha")});
+                }
+                jt_historial.setModel(articulos);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            break;
+        case "Ventas Diarias":
+            rs= con.getTable(Consulta);
+            articulos.setColumnIdentifiers(new Object[]{"Ventas","Total"});
+            try {
+                while (rs.next()) {                    
+                    articulos.addRow(new Object[]{rs.getString("Ventas"),rs.getString("Total")});
+                }
+                jt_historial.setModel(articulos);
+            } catch (Exception e) {
+            }
+            break;
+        case "Ventas Mensuales":
+          rs= con.getTable(Consulta);
+            articulos.setColumnIdentifiers(new Object[]{"Ventas","Total"});
+            try {
+                while (rs.next()) {                    
+                    articulos.addRow(new Object[]{rs.getString("Ventas"),rs.getString("Total")});
+                }
+                jt_historial.setModel(articulos);
+            } catch (Exception e) {
+            }  
+            break;
+            
+        }
+        
+    }
+   
+  
     /**
      * @param args the command line arguments
      */
