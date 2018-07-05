@@ -5,6 +5,10 @@
  */
 package Clases;
 
+import com.barcodelib.barcode.QRCode;
+import java.awt.Image;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -69,9 +73,36 @@ public class Validaciones {
                 System.out.println("Solo numeros");
                 //return;
             }
+        
     
     
 }
+       public static void generarQR(String dato){
+    int udm=0,resol=72,rot=0;
+    float mi=0.000f,md=0.000f,ms=0.000f,min=0.000f,tam=5.000f;
+        try{
+            QRCode c= new QRCode();
+            c.setData(dato);
+            c.setDataMode(QRCode.MODE_BYTE);
+            c.setUOM(udm);
+            c.setLeftMargin(mi);
+            c.setRightMargin(md);
+            c.setTopMargin(ms);
+            c.setBottomMargin(min);
+            c.setResolution(resol);
+            c.setRotate(rot);
+            c.setModuleSize(tam);
+            
+            String archivo=System.getProperty("user.home")+"/documents/Almacen clone/AlmacenFinal/src/qrhistorial.jpeg";
+            c.renderBarcode(archivo);
+            //Desktop d= Desktop.getDesktop();
+            //d.open(new File(archivo));
+            ImageIcon imagen=new ImageIcon(System.getProperty("user.home")+"src/qrhistorial.jpeg");
+            
+        }catch(Exception e){
+            System.out.println("Error en: "+e);
+        }
+    }
      
       
       

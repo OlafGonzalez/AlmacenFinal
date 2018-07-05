@@ -226,6 +226,7 @@ public class Agregar extends javax.swing.JFrame {
         this.setVisible(false);
         Almacen a= new Almacen();
         a.setVisible(true);
+        
     }//GEN-LAST:event_jbtn_cancelarActionPerformed
 
     private void jtf_precioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_precioActionPerformed
@@ -244,6 +245,9 @@ public class Agregar extends javax.swing.JFrame {
                        System.out.println(" SE INSERTO producto");
                        JOptionPane.showMessageDialog(null,"Insersión Correcta");
                        limpiar_campos();
+                       this.setVisible(false);
+                       Almacen b = new Almacen();
+                       b.setVisible(true);
                       }   
               else
                     {

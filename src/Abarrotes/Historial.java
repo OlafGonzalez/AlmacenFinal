@@ -6,7 +6,7 @@
 package Abarrotes;
 
 import Base_Datos.Conexion;
-import com.barcodelib.barcode.QRCode;
+import Clases.Validaciones;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Paragraph;
@@ -16,7 +16,6 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.sun.corba.se.pept.transport.Selector;
 import java.awt.Desktop;
-import java.awt.Image;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.sql.PreparedStatement;
@@ -26,13 +25,12 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.TimeZone;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.table.DefaultTableModel;
+import com.itextpdf.text.Image;
+
 
 //Hi
 
@@ -52,45 +50,18 @@ public class Historial extends javax.swing.JFrame {
      int mes = fecha.get(Calendar.MONTH);
      int dia = fecha.get(Calendar.DAY_OF_MONTH);
      int mes2 = mes+2;
+     Validaciones val = new Validaciones();
     /**
      * Creates new form Historial
      */
-    int udm=0,resol=72,rot=0;
-    float mi=0.000f,md=0.000f,ms=0.000f,min=0.000f,tam=5.000f;
+  
     public Historial() {
         initComponents();
         this.agregarOyente();
         jT_fecha.setVisible(true);
     }
     
-    
-    public void generarQR(String dato){
-        try{
-            QRCode c= new QRCode();
-            c.setData(dato);
-            c.setDataMode(QRCode.MODE_BYTE);
-            c.setUOM(udm);
-            c.setLeftMargin(mi);
-            c.setRightMargin(md);
-            c.setTopMargin(ms);
-            c.setBottomMargin(min);
-            c.setResolution(resol);
-            c.setRotate(rot);
-            c.setModuleSize(tam);
-            
-            String archivo=System.getProperty("user.home")+"/documents/AlmacenFInal/AlmacenFinal/src/qrhistorial.jpeg";
-            c.renderBarcode(archivo);
-            //Desktop d= Desktop.getDesktop();
-            //d.open(new File(archivo));
-            ImageIcon imagen=new ImageIcon("src/qrhistorial.jpeg");
-        jlbl_icono.setBounds(150,110,170,154);
-        Icon icono=new ImageIcon(imagen.getImage().getScaledInstance(jlbl_icono.getWidth(),jlbl_icono.getHeight(),Image.SCALE_DEFAULT));
-        jlbl_icono.setIcon(icono);
-        this.repaint();
-        }catch(Exception e){
-            
-        }
-    }
+
     private void agregarOyente() {
         jC_fecha.getDayChooser().addPropertyChangeListener(
                 new java.beans.PropertyChangeListener() {
@@ -121,7 +92,38 @@ public class Historial extends javax.swing.JFrame {
             Document doc = new Document();
             PdfWriter.getInstance(doc,archivo);
             doc.open();
-            doc.add(new Paragraph(valor+"\n\n"));
+            Paragraph pe = new Paragraph("Registros Abarrotes");
+            pe.setAlignment(1);
+            doc.add(pe);
+            Paragraph ti = new Paragraph("Articulos en Stock");
+            ti.setAlignment(1);
+            doc.add(ti);
+            String LOGO= "C:\\Users\\FLAKO\\Documents\\Almacen clone\\AlmacenFinal\\logo.png";
+            String SHOP="C:\\Users\\FLAKO\\Documents\\Almacen clone\\AlmacenFinal\\shop-icon_34368.png";  
+            Date now = new Date(System.currentTimeMillis());
+            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat hour = new SimpleDateFormat("HH:mm:ss");
+            Paragraph a = new Paragraph ("Fecha creación: "+date.format(now)+"                                                                                  Hora:"+hour.format(now));
+            Image logo= Image.getInstance(LOGO);
+            logo.setAbsolutePosition(510f, 740f);
+            logo.scaleAbsoluteWidth(90.0f);
+            logo.scaleAbsoluteHeight(80.0f);
+            doc.add(logo);
+            val.generarQR("Desarrollado por:\nMendoza Suarez Emir Edmundo\nGonzalez Cortes Olaf\n Universidad Politecnica de Pachuca");
+            Image ejqr= Image.getInstance(System.getProperty("user.home")+"/documents/Almacen clone/AlmacenFinal/src/qrhistorial.jpeg");
+            ejqr.setAbsolutePosition(490f, 20f);
+            ejqr.scaleAbsoluteWidth(90.0f);
+            ejqr.scaleAbsoluteHeight(80.0f);
+            doc.add(ejqr);
+            Image shop= Image.getInstance(SHOP);
+            shop.setAbsolutePosition(10f, 740f);
+            shop.scaleAbsoluteWidth(90.0f);
+            shop.scaleAbsoluteHeight(80.0f);
+            doc.add(shop);
+            Paragraph espacios = new Paragraph("\n\n\n\n\n\n");
+            doc.add(espacios);
+            
+       
             
             PdfPTable table = new PdfPTable(jt_historial.getColumnCount());
             PdfPCell columnHeader;
@@ -140,7 +142,8 @@ public class Historial extends javax.swing.JFrame {
                 }
             }
            doc.add(table);
-            
+            doc.add(espacios);
+            doc.add(a);
             doc.close();
             JOptionPane.showMessageDialog(null,"PDF generado correctamente");
             Desktop d= Desktop.getDesktop();
@@ -166,7 +169,6 @@ public class Historial extends javax.swing.JFrame {
         jt_historial = new javax.swing.JTable();
         jT_fecha = new javax.swing.JTextField();
         jlbl_icono = new javax.swing.JLabel();
-        jbtn_gen = new javax.swing.JButton();
         jbtn_pdf = new javax.swing.JButton();
         jcmb_Tipo = new javax.swing.JComboBox<>();
 
@@ -219,13 +221,6 @@ public class Historial extends javax.swing.JFrame {
             }
         });
 
-        jbtn_gen.setText("QR");
-        jbtn_gen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtn_genActionPerformed(evt);
-            }
-        });
-
         jbtn_pdf.setText("PDF");
         jbtn_pdf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -274,13 +269,11 @@ public class Historial extends javax.swing.JFrame {
                 .addGap(90, 90, 90)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jIF_5Layout.createSequentialGroup()
                         .addComponent(jlbl_icono, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
-                    .addGroup(jIF_5Layout.createSequentialGroup()
-                        .addComponent(jbtn_gen)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jIF_5Layout.createSequentialGroup()
                         .addComponent(jbtn_pdf)
                         .addGap(39, 39, 39))))
         );
@@ -301,9 +294,7 @@ public class Historial extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jIF_5Layout.createSequentialGroup()
-                        .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jbtn_gen)
-                            .addComponent(jbtn_pdf))
+                        .addComponent(jbtn_pdf)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                         .addComponent(jlbl_icono, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(96, 96, 96))
@@ -351,11 +342,6 @@ public class Historial extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jT_fechaActionPerformed
-
-    private void jbtn_genActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_genActionPerformed
-        String campo= jT_fecha.getText();
-        generarQR(campo);
-    }//GEN-LAST:event_jbtn_genActionPerformed
 
     private void jbtn_pdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_pdfActionPerformed
         pdf();
@@ -521,7 +507,6 @@ public class Historial extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jT_fecha;
     private javax.swing.JButton jbtn_cancelar;
-    private javax.swing.JButton jbtn_gen;
     private javax.swing.JButton jbtn_pdf;
     private javax.swing.JComboBox<String> jcmb_Tipo;
     private javax.swing.JLabel jlbl_icono;

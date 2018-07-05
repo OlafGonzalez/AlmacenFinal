@@ -44,7 +44,7 @@ public class Modificar extends javax.swing.JFrame {
     }
      public void articulos(){
        DefaultTableModel articulos = new DefaultTableModel();
-        ResultSet rs = con.getTable("select idArticulo,nombre,categoria from Articulo");
+        ResultSet rs = con.getTable("select idArticulo,nombre,categoria from Articulo where eliminar = 1");
         articulos.setColumnIdentifiers(new Object[]{"ID","Nombre","categoria"});
         try {
             while(rs.next()){

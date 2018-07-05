@@ -18,7 +18,6 @@ public class Conexion {
     public String password = "";
     public String url = "jdbc:mysql://localhost/"+bd;
 
-
 Connection conn = null;
 
    public Conexion()
