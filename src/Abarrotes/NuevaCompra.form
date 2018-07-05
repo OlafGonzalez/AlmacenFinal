@@ -139,8 +139,6 @@
                   <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
                   <Component id="jbtn_fc" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="xxxx" min="-2" pref="95" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="154" max="-2" attributes="0"/>
                   <Component id="jbtn_can" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="190" max="-2" attributes="0"/>
               </Group>
@@ -175,7 +173,6 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jbtn_can" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jbtn_fc" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="xxxx" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
               </Group>
@@ -300,11 +297,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Compra/Venta"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="xxxx">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="xxxxActionPerformed"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>

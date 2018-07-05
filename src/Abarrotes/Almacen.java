@@ -33,11 +33,11 @@ public class Almacen extends javax.swing.JFrame {
     
     public void articulos(){
        DefaultTableModel articulos = new DefaultTableModel();
-        ResultSet rs = con.getTable("select * from Articulo");
-        articulos.setColumnIdentifiers(new Object[]{"ID","Nombre","Precio","Categoria","Stock Minimo","Stock Actual"});
+        ResultSet rs = con.getTable("select * from Articulo where eliminar = 1");
+        articulos.setColumnIdentifiers(new Object[]{"ID","Nombre","PrecioCompra","PrecioVenta","Categoria","Stock Minimo","Stock Actual"});
         try {
             while(rs.next()){
-                articulos.addRow(new Object[]{rs.getString("idArticulo"),rs.getString("nombre"),rs.getString("precio"),rs.getString("categoria"),rs.getString("StockMini"),rs.getString("Stock")});
+                articulos.addRow(new Object[]{rs.getString("idArticulo"),rs.getString("nombre"),rs.getString("precioCompra"),rs.getString("precioVenta"),rs.getString("categoria"),rs.getString("StockMini"),rs.getString("Stock")});
             }
             jt_productos.setModel(articulos);
         } catch (Exception e) {

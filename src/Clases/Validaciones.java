@@ -72,10 +72,7 @@ public class Validaciones {
     
     
 }
-      public void AgregarCV(){
-          
-      }
-      
+     
       
       
 }

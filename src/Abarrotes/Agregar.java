@@ -54,6 +54,8 @@ public class Agregar extends javax.swing.JFrame {
         jtf_Cantidad1 = new javax.swing.JTextField();
         txt_actual = new javax.swing.JLabel();
         jtf_actualCantidad = new javax.swing.JTextField();
+        jlb_precioCompra = new javax.swing.JLabel();
+        jtf_precio1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 188, 212));
@@ -69,7 +71,7 @@ public class Agregar extends javax.swing.JFrame {
 
         jlbl_n.setText("Nombre:");
 
-        jlbl_precio.setText("Precio:");
+        jlbl_precio.setText("Precio Venta:");
 
         jtf_precio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,6 +135,19 @@ public class Agregar extends javax.swing.JFrame {
             }
         });
 
+        jlb_precioCompra.setText("Precio Compra:");
+
+        jtf_precio1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtf_precio1ActionPerformed(evt);
+            }
+        });
+        jtf_precio1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtf_precio1KeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -140,25 +155,27 @@ public class Agregar extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(hlbl_cant)
-                            .addComponent(jtf_Cantidad1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbtn_cancelar))
-                    .addComponent(jtf_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlbl_n)
-                    .addComponent(jlbl_tipo)
-                    .addComponent(jCB_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_actual)
-                    .addComponent(jtf_actualCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtf_nom, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlbl_precio))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jbtn_guardar)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(hlbl_cant)
+                                .addComponent(jCB_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jbtn_cancelar))
+                        .addComponent(jtf_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jlbl_n)
+                        .addComponent(txt_actual)
+                        .addComponent(jtf_actualCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jtf_nom, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jlbl_precio))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jbtn_guardar))
+                        .addComponent(jtf_Cantidad1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jlb_precioCompra)
+                    .addComponent(jtf_precio1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlbl_tipo))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -170,31 +187,36 @@ public class Agregar extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jtf_nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jlbl_precio))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addComponent(jbtn_guardar)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtf_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addComponent(jbtn_cancelar))
+                        .addGap(121, 121, 121)
+                        .addComponent(jbtn_cancelar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jlbl_tipo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCB_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtf_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlb_precioCompra)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtf_precio1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlbl_tipo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jCB_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(hlbl_cant)
-                        .addGap(18, 18, 18)
-                        .addComponent(jtf_Cantidad1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(4, 4, 4)))
+                .addComponent(jtf_Cantidad1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txt_actual)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jtf_actualCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -215,7 +237,7 @@ public class Agregar extends javax.swing.JFrame {
          try{
              int guardar;
              st=con.obtenerConexion().prepareStatement
-             ("INSERT INTO Articulo(idArticulo,nombre,precio,categoria,StockMini,Stock)values("+null+",'"+jtf_nom.getText()+"','"+jtf_precio.getText()+"','"+jCB_tipo.getSelectedItem().toString()+"','"+jtf_Cantidad1.getText()+"','"+jtf_actualCantidad.getText()+"');");
+             ("INSERT INTO Articulo(idArticulo,nombre,precioVenta,precioCompra,categoria,StockMini,Stock,eliminar)values("+null+",'"+jtf_nom.getText()+"','"+jtf_precio.getText()+"','"+jtf_precio1.getText()+"','"+jCB_tipo.getSelectedItem().toString()+"','"+jtf_Cantidad1.getText()+"','"+jtf_actualCantidad.getText()+"',1);");
              guardar = st.executeUpdate();
               if (guardar > 0)
                     {
@@ -274,6 +296,14 @@ public class Agregar extends javax.swing.JFrame {
         ex.validar_num(evt,jtf_actualCantidad);
     }//GEN-LAST:event_jtf_actualCantidadKeyTyped
 
+    private void jtf_precio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_precio1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_precio1ActionPerformed
+
+    private void jtf_precio1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_precio1KeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_precio1KeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -314,6 +344,7 @@ public class Agregar extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jCB_tipo;
     private javax.swing.JButton jbtn_cancelar;
     private javax.swing.JButton jbtn_guardar;
+    private javax.swing.JLabel jlb_precioCompra;
     private javax.swing.JLabel jlbl_n;
     private javax.swing.JLabel jlbl_precio;
     private javax.swing.JLabel jlbl_tipo;
@@ -321,6 +352,7 @@ public class Agregar extends javax.swing.JFrame {
     private javax.swing.JTextField jtf_actualCantidad;
     private javax.swing.JTextField jtf_nom;
     private javax.swing.JTextField jtf_precio;
+    private javax.swing.JTextField jtf_precio1;
     private javax.swing.JLabel txt_actual;
     // End of variables declaration//GEN-END:variables
 }

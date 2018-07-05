@@ -28,22 +28,17 @@
               <Component id="jIF_2" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="7" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jIF_2" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="jPanel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jIF_2" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -69,6 +64,7 @@
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="txt_producto" max="32767" attributes="0"/>
                               <Component id="txt_precio" pref="170" max="32767" attributes="0"/>
+                              <Component id="txt_precio1" alignment="0" pref="170" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
@@ -92,31 +88,31 @@
                               <Component id="cmb_categoria" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jlb_catactual" min="-2" pref="120" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="96" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <Component id="jButton_eliminar" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="128" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
               </Group>
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                           <Component id="jbtn_gu" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                           <Component id="jbtn_cancelar" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jlb_precio" min="-2" max="-2" attributes="0"/>
-                              <Component id="jlbl_cp" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="jlbl_cp" min="-2" max="-2" attributes="0"/>
+                      <Component id="jlb_precio" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jlb_precio1" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -134,17 +130,22 @@
                       <Component id="jlbl_producto" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txt_producto" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jlb_precio" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txt_precio" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jlb_precio1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txt_precio1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="txt_minimo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jLabel3" max="32767" attributes="0"/>
                       <Component id="jlb_catactual" max="32767" attributes="0"/>
@@ -158,6 +159,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jbtn_cancelar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jbtn_gu" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButton_eliminar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="161" max="32767" attributes="0"/>
               </Group>
@@ -199,7 +201,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jlb_precio">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Precio:"/>
+            <Property name="text" type="java.lang.String" value="Precio Compra:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
@@ -247,6 +249,21 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jlb_catactual">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jlb_precio1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Precio Venta:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txt_precio1">
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton_eliminar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Eliminar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_eliminarActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

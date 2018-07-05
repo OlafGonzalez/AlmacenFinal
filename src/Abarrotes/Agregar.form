@@ -29,29 +29,32 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="hlbl_cant" min="-2" max="-2" attributes="0"/>
-                          <Component id="jtf_Cantidad1" min="-2" pref="121" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="hlbl_cant" min="-2" max="-2" attributes="0"/>
+                              <Component id="jCB_tipo" alignment="0" min="-2" pref="118" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jbtn_cancelar" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jbtn_cancelar" min="-2" max="-2" attributes="0"/>
+                      <Component id="jtf_precio" min="-2" pref="150" max="-2" attributes="0"/>
+                      <Component id="jlbl_n" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="txt_actual" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jtf_actualCantidad" alignment="0" min="-2" pref="121" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jtf_nom" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                              <Component id="jlbl_precio" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jbtn_guardar" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="jtf_Cantidad1" alignment="0" min="-2" pref="121" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jtf_precio" min="-2" pref="150" max="-2" attributes="0"/>
-                  <Component id="jlbl_n" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlb_precioCompra" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jtf_precio1" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                   <Component id="jlbl_tipo" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jCB_tipo" alignment="0" min="-2" pref="118" max="-2" attributes="0"/>
-                  <Component id="txt_actual" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jtf_actualCantidad" alignment="0" min="-2" pref="121" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jtf_nom" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                          <Component id="jlbl_precio" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jbtn_guardar" min="-2" max="-2" attributes="0"/>
-                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -66,7 +69,7 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jtf_nom" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jlbl_precio" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -74,29 +77,34 @@
                       <Component id="jbtn_guardar" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jtf_precio" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="121" max="-2" attributes="0"/>
                       <Component id="jbtn_cancelar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                      <Component id="jlbl_tipo" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jCB_tipo" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jtf_precio" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jlb_precioCompra" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jtf_precio1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jlbl_tipo" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jCB_tipo" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="hlbl_cant" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jtf_Cantidad1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                   </Group>
               </Group>
+              <Component id="jtf_Cantidad1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="txt_actual" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jtf_actualCantidad" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="25" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -115,7 +123,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jlbl_precio">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Precio:"/>
+        <Property name="text" type="java.lang.String" value="Precio Venta:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtf_precio">
@@ -187,6 +195,17 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtf_actualCantidadActionPerformed"/>
         <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_actualCantidadKeyTyped"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jlb_precioCompra">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Precio Compra:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jtf_precio1">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtf_precio1ActionPerformed"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_precio1KeyTyped"/>
       </Events>
     </Component>
   </SubComponents>

@@ -41,7 +41,7 @@ public class NuevaCompra extends javax.swing.JFrame {
     }
      public void articulos(){
        DefaultTableModel articulos = new DefaultTableModel();
-        ResultSet rs = con.getTable("select idArticulo,nombre,categoria from Articulo");
+        ResultSet rs = con.getTable("select idArticulo,nombre,categoria from Articulo where eliminar = 1");
         articulos.setColumnIdentifiers(new Object[]{"ID","Nombre","categoria"});
         try {
             while(rs.next()){
@@ -82,7 +82,6 @@ public class NuevaCompra extends javax.swing.JFrame {
         jt_articulos = new javax.swing.JTable();
         jcmb_CompraVenta = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        xxxx = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -183,12 +182,6 @@ public class NuevaCompra extends javax.swing.JFrame {
 
         jLabel2.setText("Compra/Venta");
 
-        xxxx.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                xxxxActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
         jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
         jInternalFrame1Layout.setHorizontalGroup(
@@ -226,8 +219,6 @@ public class NuevaCompra extends javax.swing.JFrame {
                 .addGap(73, 73, 73)
                 .addComponent(jbtn_fc)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(xxxx, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(154, 154, 154)
                 .addComponent(jbtn_can)
                 .addGap(190, 190, 190))
         );
@@ -255,8 +246,7 @@ public class NuevaCompra extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtn_can)
-                    .addComponent(jbtn_fc)
-                    .addComponent(xxxx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jbtn_fc))
                 .addGap(73, 73, 73))
         );
 
@@ -296,6 +286,24 @@ public class NuevaCompra extends javax.swing.JFrame {
         }  
     
     }
+    public void actualizarVentaStock(int fil){
+      String actualizar = "update Articulo set Stock=(Stock-"+tot.getValueAt(fil, 3)+") where idArticulo = "+tot.getValueAt(fil,0)+";";  
+        try {
+            st=con.obtenerConexion().prepareStatement(actualizar);
+            int guardar = st.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error 4:"+actualizar);
+        }
+    }
+    public void actualizarCompraStock(int fil){
+      String actualizar = "update Articulo set Stock=(Stock+"+tot.getValueAt(fil, 3)+") where idArticulo = "+tot.getValueAt(fil,0)+";";  
+        try {
+            st=con.obtenerConexion().prepareStatement(actualizar);
+            int guardar = st.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error 4:"+actualizar);
+        }
+    }
     public String seleccionarMAXID(){
         try {
         String Max = "SELECT MAX("+idVC+") from "+Tabla2+" limit 1;"; 
@@ -309,11 +317,9 @@ public class NuevaCompra extends javax.swing.JFrame {
         rs2.close();
         PS.close();
         
-        }catch(Exception e){
-            
+        }catch(Exception e){    
         }
         return null;
-        
     }
     public void insertVeCompr(String Resultado){
         String con = ("Insert into "+Tabla2+" values ("+null+","+Resultado+");");
@@ -324,7 +330,7 @@ public class NuevaCompra extends javax.swing.JFrame {
             System.out.println("Error 3:"+con);
         }  
     }
-
+    
 //Finalizar Compra/Venta
     private void jbtn_fcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_fcActionPerformed
          int cols = tot.getColumnCount();
@@ -336,7 +342,7 @@ public class NuevaCompra extends javax.swing.JFrame {
      total = total + valor;
 } 
     String Resultado = Integer.toString((int) total);
-    txt_total.setText(Resultado); 
+          txt_total.setText(Resultado); 
           //inserta tabla Venta/compra
           insertVeCompr(Resultado);
           //Selecciona el id maxico
@@ -344,10 +350,19 @@ public class NuevaCompra extends javax.swing.JFrame {
          //agregar consulta DetalleCompraVenta
          for(fil=0; fil < fila; fil++){    
             InsertCV(fil,k);  
+         //Actualizar Stock
+         if(Tabla2 == "Venta"){
+             actualizarVentaStock(fil);
          }
-        
+         if(Tabla2 == "Compra"){
+             actualizarCompraStock(fil);
+         }
+             
+         }
+       
     jt_compra.setModel(new DefaultTableModel());
     jt_compra.removeAll();
+    txt_total.setText("");
     }//GEN-LAST:event_jbtn_fcActionPerformed
  
 //Agregar productos  a la lista 
@@ -363,18 +378,28 @@ public class NuevaCompra extends javax.swing.JFrame {
         
          ResultSet rs = con.getTable(Con);
          tot.setColumnIdentifiers(new Object[]{"ID","Nombre","Precio","Cantidad","Total de Articulos"});
- 
-         try{
+         
+         if(Tabla2 == "Venta"){
+           try{             
+              while(rs.next()){
+                  tot.addRow(new Object[]{rs.getString("idArticulo"),rs.getString("nombre"),rs.getString("precioVenta"),txt_cantidad.getText(),rs.getFloat("precioVenta")*cantidad});                
+              }
+          jt_compra.setModel(tot);
+          }catch(Exception e){
+              System.out.println("Error en la consulta"+Con);
+          }  
+         }
+         if(Tabla2 == "Compra"){
+             try{
              
               while(rs.next()){
-                  tot.addRow(new Object[]{rs.getString("idArticulo"),rs.getString("nombre"),rs.getString("precio"),txt_cantidad.getText(),rs.getFloat("precio")*cantidad});                
+                  tot.addRow(new Object[]{rs.getString("idArticulo"),rs.getString("nombre"),rs.getString("precioCompra"),txt_cantidad.getText(),rs.getFloat("precioCompra")*cantidad});                
               }
           jt_compra.setModel(tot);
           }catch(Exception e){
               System.out.println("Error en la consulta"+Con);
           }
-       
-         
+         } 
     }//GEN-LAST:event_jbnt_agreActionPerformed
 
     private void jcmb_CompraVentaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcmb_CompraVentaItemStateChanged
@@ -397,10 +422,6 @@ public class NuevaCompra extends javax.swing.JFrame {
               break;
       }    
     }//GEN-LAST:event_jcmb_CompraVentaItemStateChanged
-
-    private void xxxxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xxxxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_xxxxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -458,6 +479,5 @@ public class NuevaCompra extends javax.swing.JFrame {
     private javax.swing.JTextField jtf_np;
     private javax.swing.JTextField txt_cantidad;
     private javax.swing.JTextField txt_total;
-    private javax.swing.JTextField xxxx;
     // End of variables declaration//GEN-END:variables
 }

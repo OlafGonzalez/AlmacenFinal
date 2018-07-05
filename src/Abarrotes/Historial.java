@@ -169,7 +169,6 @@ public class Historial extends javax.swing.JFrame {
         jbtn_gen = new javax.swing.JButton();
         jbtn_pdf = new javax.swing.JButton();
         jcmb_Tipo = new javax.swing.JComboBox<>();
-        txt_cambiotipo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -261,11 +260,7 @@ public class Historial extends javax.swing.JFrame {
                         .addGap(39, 39, 39)
                         .addComponent(jlbl_tipo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jT_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jIF_5Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(txt_cambiotipo, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jT_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(52, 52, 52))
                     .addGroup(jIF_5Layout.createSequentialGroup()
                         .addContainerGap()
@@ -301,9 +296,7 @@ public class Historial extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jcmb_Tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbtn_cancelar))
-                        .addGap(18, 18, 18)
-                        .addComponent(txt_cambiotipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jbtn_cancelar)))
                     .addComponent(jC_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(jIF_5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -377,7 +370,6 @@ public class Historial extends javax.swing.JFrame {
     }//GEN-LAST:event_jcmb_TipoActionPerformed
 
     private void jcmb_TipoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jcmb_TipoPropertyChange
-        txt_cambiotipo.setText(jcmb_Tipo.getSelectedItem().toString());
     }//GEN-LAST:event_jcmb_TipoPropertyChange
 
     private void jcmb_TipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcmb_TipoItemStateChanged
@@ -386,13 +378,13 @@ public class Historial extends javax.swing.JFrame {
        
         case "Ventas Generales":
          Tipo = "Ventas Generales";
-         Consulta = "select nombre,precio,cantidad,fecha from articulo, DetalleV where articulo.idArticulo=DetalleV.idArticulo and fecha like '"+jT_fecha.getText()+"';";
+         Consulta = "select nombre,precioVenta,cantidad,fecha from articulo, DetalleV where articulo.idArticulo=DetalleV.idArticulo and fecha like '"+jT_fecha.getText()+"';";
          Consultas(Consulta, jT_fecha);
          System.out.println(Consulta);
             break;
         case "Compras Generales":
          Tipo = "Compras Generales";
-         Consulta = "select nombre,precio,cantidad,fecha from articulo, DetalleC where articulo.idArticulo=DetalleC.idArticulo and fecha like '"+jT_fecha.getText()+"';";
+         Consulta = "select nombre,precioCompra,cantidad,fecha from articulo, DetalleC where articulo.idArticulo=DetalleC.idArticulo and fecha like '"+jT_fecha.getText()+"';";
             Consultas(Consulta, jT_fecha);
          System.out.println(Consulta);
             break;
@@ -426,7 +418,7 @@ public class Historial extends javax.swing.JFrame {
         articulos.setColumnIdentifiers(new Object []{"nombre","precio","cantidad","fecha"});
         try {
             while(rs.next()){
-                articulos.addRow(new Object[]{rs.getString("nombre"),rs.getString("precio"),rs.getString("cantidad"),rs.getString("fecha")});
+                articulos.addRow(new Object[]{rs.getString("nombre"),rs.getString("precioVenta"),rs.getString("cantidad"),rs.getString("fecha")});
             }
             jt_historial.setModel(articulos);
         } catch (Exception e) {
@@ -439,7 +431,7 @@ public class Historial extends javax.swing.JFrame {
         articulos.setColumnIdentifiers(new Object []{"nombre","precio","cantidad","fecha"});
         try {
             while(rs.next()){
-                articulos.addRow(new Object[]{rs.getString("nombre"),rs.getString("precio"),rs.getString("cantidad"),rs.getString("fecha")});
+                articulos.addRow(new Object[]{rs.getString("nombre"),rs.getString("precioCompra"),rs.getString("cantidad"),rs.getString("fecha")});
             }
             jt_historial.setModel(articulos);
         } catch (Exception e) {
@@ -535,6 +527,5 @@ public class Historial extends javax.swing.JFrame {
     private javax.swing.JLabel jlbl_icono;
     private javax.swing.JLabel jlbl_tipo;
     private javax.swing.JTable jt_historial;
-    private javax.swing.JTextField txt_cambiotipo;
     // End of variables declaration//GEN-END:variables
 }
