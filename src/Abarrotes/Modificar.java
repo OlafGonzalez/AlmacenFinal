@@ -454,7 +454,7 @@ public class Modificar extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_seleccionarKeyTyped
 
     private void txt_productoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_productoKeyTyped
-        // TODO add your handling code here:
+        val.limite_caracteres(evt, txt_producto);
     }//GEN-LAST:event_txt_productoKeyTyped
 
     private void txt_precioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_precioKeyTyped
