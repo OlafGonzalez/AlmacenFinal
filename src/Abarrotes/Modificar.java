@@ -7,6 +7,7 @@ package Abarrotes;
 
 import Base_Datos.Conexion;
 import Clases.Idioma;
+import Clases.Validaciones;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
@@ -34,6 +35,7 @@ public class Modificar extends javax.swing.JFrame {
     PreparedStatement st =null;
     ResultSet res,res2, idPConsec=null, kk=null;
     int idP_=0;
+    Validaciones val = new Validaciones();
     /**
      * Creates new form Modificar
      */
@@ -79,12 +81,12 @@ public class Modificar extends javax.swing.JFrame {
     
         
         try {
-            String consulta = "select categoria from Articulo group by categoria;";
+            String consulta = "select categoria2 from catego;";
            st = con.obtenerConexion().prepareStatement(consulta);
            res = st.executeQuery();
            
             while (res.next()) {                
-                cmb_categoria.addItem(res.getString("categoria"));
+                cmb_categoria.addItem(res.getString("categoria2"));
             }
             res.close();
             
@@ -138,8 +140,20 @@ public class Modificar extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Modificar");
 
+        txt_producto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_productoKeyTyped(evt);
+            }
+        });
+
         jlb_precio.setForeground(new java.awt.Color(240, 240, 240));
         jlb_precio.setText("Precio Compra:");
+
+        txt_seleccionar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_seleccionarKeyTyped(evt);
+            }
+        });
 
         btn_seleccionar.setBackground(new java.awt.Color(83, 109, 254));
         btn_seleccionar.setForeground(new java.awt.Color(240, 240, 240));
@@ -147,6 +161,12 @@ public class Modificar extends javax.swing.JFrame {
         btn_seleccionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_seleccionarActionPerformed(evt);
+            }
+        });
+
+        txt_precio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_precioKeyTyped(evt);
             }
         });
 
@@ -159,8 +179,20 @@ public class Modificar extends javax.swing.JFrame {
         jlb_precio1.setForeground(new java.awt.Color(240, 240, 240));
         jlb_precio1.setText("Precio Venta:");
 
+        txt_precio1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_precio1KeyTyped(evt);
+            }
+        });
+
         jlbl_cms.setForeground(new java.awt.Color(240, 240, 240));
         jlbl_cms.setText("Cantidad Minima de Stock:");
+
+        txt_minimo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_minimoKeyTyped(evt);
+            }
+        });
 
         jlbl_CA.setForeground(new java.awt.Color(240, 240, 240));
         jlbl_CA.setText("Categoria Actual");
@@ -351,6 +383,7 @@ public class Modificar extends javax.swing.JFrame {
             
             if(guardar > 0){
                        JOptionPane.showMessageDialog(null,"Producto modificado");
+                       articulos();
             }
             else{
                         JOptionPane.showMessageDialog(null,"Producto no modificado");
@@ -415,6 +448,30 @@ public class Modificar extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_btn_seleccionarActionPerformed
+
+    private void txt_seleccionarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_seleccionarKeyTyped
+        val.validar_num(evt,txt_seleccionar);
+    }//GEN-LAST:event_txt_seleccionarKeyTyped
+
+    private void txt_productoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_productoKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_productoKeyTyped
+
+    private void txt_precioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_precioKeyTyped
+         val.signo(evt,txt_precio);
+       val.limite_caracteres(evt, txt_precio);
+       val.Signomenos(evt, txt_precio);
+    }//GEN-LAST:event_txt_precioKeyTyped
+
+    private void txt_precio1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_precio1KeyTyped
+        val.signo(evt,txt_precio1);
+       val.limite_caracteres(evt, txt_precio1);
+       val.Signomenos(evt, txt_precio1);
+    }//GEN-LAST:event_txt_precio1KeyTyped
+
+    private void txt_minimoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_minimoKeyTyped
+        val.validar_num(evt, txt_minimo);
+    }//GEN-LAST:event_txt_minimoKeyTyped
 
     /**
      * @param args the command line arguments

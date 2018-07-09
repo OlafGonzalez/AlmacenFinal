@@ -104,6 +104,67 @@ public class Validaciones {
         }
     }
      
+      public static boolean vacio(JTextField txtNum1, JTextField txtNum2){
+        if((txtNum1.getText().isEmpty()) || (txtNum2.getText().isEmpty())){
+            JOptionPane.showMessageDialog(null,"No dejar campos vacios!!","Error!",JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        else{
+        return true;
+        }
+    }
       
-      
+    public void limite_caracteres(java.awt.event.KeyEvent e, JTextField t){
+        if (t.getText().length()==10){
+            e.consume();
+        }
+    }
+  
+    public static boolean cero(JTextField t){
+        double a,b;
+        a=Double.parseDouble(t.getText());
+        if(a==0){
+            JOptionPane.showMessageDialog(null,"No se puede dividir entre 0!","Error!",JOptionPane.ERROR_MESSAGE);
+            t.setText("");
+            return false;
+        }
+        return true;
+    }
+    public void signo(java.awt.event.KeyEvent evt, JTextField txtnum1){
+        char a= evt.getKeyChar();
+        boolean valid=false;
+        if(a=='-'){
+        Object component= evt.getComponent();
+         if(component instanceof JTextField){
+         JTextField tf=(JTextField) component;
+            valid=tf.getText().isEmpty();
+            }
+        }
+        else if(a>='.'){
+            valid=true;
+        }
+        else if(a>= '0' && a<='9'){
+            valid=true;
+        }
+        if(!valid){
+            evt.consume();
+        }   
+    }
+    public void s(JTextField txtnum1, JTextField txtnum2){
+        if(txtnum1.getText()=="-" && txtnum2.getText()=="-"){
+            JOptionPane.showMessageDialog(null,"Error, debe ingresar numeros!","Error!",JOptionPane.ERROR_MESSAGE);
+        }
+}
+    public void Signomenos(java.awt.event.KeyEvent evt, JTextField field){
+         if(evt.getKeyChar()== '-'){
+            evt.consume();
+        }
+        if(evt.getKeyChar()=='.' && field.getText().contains(".")){
+            evt.consume();
+        }
+        if(!Character.isDigit(evt.getKeyChar()) && evt.getKeyChar()!= '.' && evt.getKeyChar()!='-'){
+        evt.consume();
+    }
+    }
+    
 }

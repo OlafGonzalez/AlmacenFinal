@@ -160,7 +160,12 @@ public class Almacen extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtn_cActionPerformed
 
     private void jbtn_agActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_agActionPerformed
-Agregar ag = new Agregar();
+Agregar ag = null;
+        try {
+            ag = new Agregar();
+        } catch (SQLException ex) {
+            Logger.getLogger(Almacen.class.getName()).log(Level.SEVERE, null, ex);
+        }
 ag.setVisible(true);
 ag.cambiarIdioma1(a);
 this.setVisible(false);

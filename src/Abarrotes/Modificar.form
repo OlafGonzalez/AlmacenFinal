@@ -158,6 +158,9 @@
   </Layout>
   <SubComponents>
     <Component class="javax.swing.JTextField" name="txt_producto">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_productoKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jlb_precio">
       <Properties>
@@ -168,6 +171,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txt_seleccionar">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_seleccionarKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btn_seleccionar">
       <Properties>
@@ -184,6 +190,9 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txt_precio">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_precioKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jlbl_ID">
       <Properties>
@@ -210,6 +219,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txt_precio1">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_precio1KeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jlbl_cms">
       <Properties>
@@ -220,6 +232,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txt_minimo">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_minimoKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jlbl_CA">
       <Properties>

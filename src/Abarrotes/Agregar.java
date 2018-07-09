@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-//que pedo morro
-//Holi ppro
+
 package Abarrotes;
-//no mms skd
 import Base_Datos.Conexion;
 import Clases.Idioma;
 import Clases.Validaciones;
@@ -30,10 +28,32 @@ public class Agregar extends javax.swing.JFrame {
     /**
      * Creates new form Agregar
      */
-    public Agregar() {
+    public Agregar() throws SQLException {
         initComponents();
         setLocationRelativeTo(null);
         this.getContentPane().setBackground(new java.awt.Color(0,188,212));
+        modi();
+    }
+     public void modi() throws SQLException {
+      
+        Conexion con = this.con;
+    
+        
+        try {
+            String consulta = "select categoria2 from catego;";
+           st = con.obtenerConexion().prepareStatement(consulta);
+           rs = st.executeQuery();
+           
+            while (rs.next()) {                
+                jCB_tipo.addItem(rs.getString("categoria2"));
+            }
+            rs.close();
+            
+        } catch (SQLException e) {
+            
+        }
+      
+        
     }
     public void cambiarIdioma1(String nombreIdioma){
         Idioma  idioma =new Idioma(nombreIdioma);
@@ -314,7 +334,10 @@ public class Agregar extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_nomKeyTyped
 
     private void jtf_precioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_precioKeyTyped
-        ex.validar_num(evt,jtf_precio);
+        //ex.validar_num(evt,jtf_precio);
+         ex.limite_caracteres(evt, jtf_precio);
+        ex.Signomenos(evt, jtf_precio);
+ 
     }//GEN-LAST:event_jtf_precioKeyTyped
 
     private void jtf_Cantidad1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_Cantidad1KeyTyped
@@ -330,7 +353,9 @@ public class Agregar extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_precio1ActionPerformed
 
     private void jtf_precio1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_precio1KeyTyped
-        // TODO add your handling code here:
+       ex.signo(evt, jtf_precio1);
+       ex.limite_caracteres(evt, jtf_precio1);
+       ex.Signomenos(evt, jtf_precio1);
     }//GEN-LAST:event_jtf_precio1KeyTyped
 
     /**
@@ -363,7 +388,11 @@ public class Agregar extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Agregar().setVisible(true);
+                try {
+                    new Agregar().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Agregar.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
