@@ -8,6 +8,7 @@
 package Abarrotes;
 //no mms skd
 import Base_Datos.Conexion;
+import Clases.Idioma;
 import Clases.Validaciones;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,6 +23,7 @@ import javax.swing.JOptionPane;
  */
 public class Agregar extends javax.swing.JFrame {
     Conexion con = new Conexion();
+    public String ag;
     PreparedStatement st = null;
     ResultSet rs , idAconse = null, kk = null;
     Validaciones ex = new Validaciones();
@@ -30,9 +32,21 @@ public class Agregar extends javax.swing.JFrame {
      */
     public Agregar() {
         initComponents();
-        
+        setLocationRelativeTo(null);
+        this.getContentPane().setBackground(new java.awt.Color(0,188,212));
     }
-
+    public void cambiarIdioma1(String nombreIdioma){
+        Idioma  idioma =new Idioma(nombreIdioma);
+        jlbl_n.setText(idioma.getProperty("Nombre"));
+        jlbl_precio.setText(idioma.getProperty("PV"));
+        jlb_precioCompra.setText(idioma.getProperty("PC"));
+        jlbl_tipo.setText(idioma.getProperty("Ctegoria"));
+        jlbl_cant.setText(idioma.getProperty("CM"));
+        jlbl_actual.setText(idioma.getProperty("CA"));
+        jbtn_guardar.setText(idioma.getProperty("Guardar"));
+        jbtn_cancelar.setText(idioma.getProperty("Cancelar"));
+        ag=nombreIdioma;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,18 +60,19 @@ public class Agregar extends javax.swing.JFrame {
         jlbl_n = new javax.swing.JLabel();
         jlbl_precio = new javax.swing.JLabel();
         jtf_precio = new javax.swing.JTextField();
-        hlbl_cant = new javax.swing.JLabel();
+        jlbl_cant = new javax.swing.JLabel();
         jCB_tipo = new javax.swing.JComboBox<>();
         jlbl_tipo = new javax.swing.JLabel();
         jbtn_cancelar = new javax.swing.JButton();
         jbtn_guardar = new javax.swing.JButton();
         jtf_Cantidad1 = new javax.swing.JTextField();
-        txt_actual = new javax.swing.JLabel();
+        jlbl_actual = new javax.swing.JLabel();
         jtf_actualCantidad = new javax.swing.JTextField();
         jlb_precioCompra = new javax.swing.JLabel();
         jtf_precio1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Agregar");
         setBackground(new java.awt.Color(0, 188, 212));
 
         jtf_nom.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -69,8 +84,10 @@ public class Agregar extends javax.swing.JFrame {
             }
         });
 
+        jlbl_n.setForeground(new java.awt.Color(240, 240, 240));
         jlbl_n.setText("Nombre:");
 
+        jlbl_precio.setForeground(new java.awt.Color(240, 240, 240));
         jlbl_precio.setText("Precio Venta:");
 
         jtf_precio.addActionListener(new java.awt.event.ActionListener() {
@@ -84,7 +101,8 @@ public class Agregar extends javax.swing.JFrame {
             }
         });
 
-        hlbl_cant.setText("Cantidad minima en stock:");
+        jlbl_cant.setForeground(new java.awt.Color(240, 240, 240));
+        jlbl_cant.setText("Cantidad minima en stock:");
 
         jCB_tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cereal", "Alcohol" }));
         jCB_tipo.addActionListener(new java.awt.event.ActionListener() {
@@ -93,9 +111,11 @@ public class Agregar extends javax.swing.JFrame {
             }
         });
 
+        jlbl_tipo.setForeground(new java.awt.Color(240, 240, 240));
         jlbl_tipo.setText("Categoria:");
 
         jbtn_cancelar.setBackground(new java.awt.Color(0, 150, 136));
+        jbtn_cancelar.setForeground(new java.awt.Color(240, 240, 240));
         jbtn_cancelar.setText("Cancelar");
         jbtn_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,6 +124,7 @@ public class Agregar extends javax.swing.JFrame {
         });
 
         jbtn_guardar.setBackground(new java.awt.Color(0, 150, 136));
+        jbtn_guardar.setForeground(new java.awt.Color(240, 240, 240));
         jbtn_guardar.setText("Guardar");
         jbtn_guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -122,7 +143,8 @@ public class Agregar extends javax.swing.JFrame {
             }
         });
 
-        txt_actual.setText("Cantidad Actual:");
+        jlbl_actual.setForeground(new java.awt.Color(240, 240, 240));
+        jlbl_actual.setText("Cantidad Actual:");
 
         jtf_actualCantidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,6 +157,7 @@ public class Agregar extends javax.swing.JFrame {
             }
         });
 
+        jlb_precioCompra.setForeground(new java.awt.Color(240, 240, 240));
         jlb_precioCompra.setText("Precio Compra:");
 
         jtf_precio1.addActionListener(new java.awt.event.ActionListener() {
@@ -158,13 +181,13 @@ public class Agregar extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(hlbl_cant)
+                                .addComponent(jlbl_cant)
                                 .addComponent(jCB_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jbtn_cancelar))
                         .addComponent(jtf_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jlbl_n)
-                        .addComponent(txt_actual)
+                        .addComponent(jlbl_actual)
                         .addComponent(jtf_actualCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,11 +232,11 @@ public class Agregar extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jCB_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(hlbl_cant)
+                        .addComponent(jlbl_cant)
                         .addGap(4, 4, 4)))
                 .addComponent(jtf_Cantidad1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_actual)
+                .addComponent(jlbl_actual)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jtf_actualCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -225,6 +248,8 @@ public class Agregar extends javax.swing.JFrame {
     private void jbtn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_cancelarActionPerformed
         this.setVisible(false);
         Almacen a= new Almacen();
+        a.cambiarIdioma1(ag);
+        a.a=ag;
         a.setVisible(true);
         
     }//GEN-LAST:event_jbtn_cancelarActionPerformed
@@ -344,11 +369,12 @@ public class Agregar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel hlbl_cant;
     private javax.swing.JComboBox<String> jCB_tipo;
     private javax.swing.JButton jbtn_cancelar;
     private javax.swing.JButton jbtn_guardar;
     private javax.swing.JLabel jlb_precioCompra;
+    private javax.swing.JLabel jlbl_actual;
+    private javax.swing.JLabel jlbl_cant;
     private javax.swing.JLabel jlbl_n;
     private javax.swing.JLabel jlbl_precio;
     private javax.swing.JLabel jlbl_tipo;
@@ -357,6 +383,5 @@ public class Agregar extends javax.swing.JFrame {
     private javax.swing.JTextField jtf_nom;
     private javax.swing.JTextField jtf_precio;
     private javax.swing.JTextField jtf_precio1;
-    private javax.swing.JLabel txt_actual;
     // End of variables declaration//GEN-END:variables
 }

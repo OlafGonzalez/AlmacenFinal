@@ -6,6 +6,7 @@
 package Abarrotes;
 
 import Base_Datos.Conexion;
+import Clases.Idioma;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,6 +19,8 @@ import javax.swing.table.DefaultTableModel;
  * @author Emir
  */
 public class Almacen extends javax.swing.JFrame {
+    public String a="Español";
+            Menu m = new Menu();
     Conexion con = new Conexion();
     PreparedStatement p=null;
     ResultSet res, idPConsec=null, kk=null;
@@ -29,8 +32,16 @@ public class Almacen extends javax.swing.JFrame {
     public Almacen() {
         initComponents();
         articulos();
+        setLocationRelativeTo(null);
+        this.getContentPane().setBackground(new java.awt.Color(0,188,212));
     }
-    
+    public void cambiarIdioma1(String nombreIdioma){
+        Idioma  idioma =new Idioma(nombreIdioma);
+        jbtn_ag.setText(idioma.getProperty("Agregar"));
+        jbtn_mo.setText(idioma.getProperty("Modificar"));
+        jbtn_c.setText(idioma.getProperty("Cancelar"));
+        a=nombreIdioma;
+    }
     public void articulos(){
        DefaultTableModel articulos = new DefaultTableModel();
         ResultSet rs = con.getTable("select * from Articulo where eliminar = 1");
@@ -62,8 +73,11 @@ public class Almacen extends javax.swing.JFrame {
         jt_productos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Almacen");
         setBackground(new java.awt.Color(0, 188, 212));
 
+        jbtn_ag.setBackground(new java.awt.Color(0, 150, 136));
+        jbtn_ag.setForeground(new java.awt.Color(240, 240, 240));
         jbtn_ag.setText("Agregar");
         jbtn_ag.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -71,6 +85,8 @@ public class Almacen extends javax.swing.JFrame {
             }
         });
 
+        jbtn_mo.setBackground(new java.awt.Color(0, 150, 136));
+        jbtn_mo.setForeground(new java.awt.Color(240, 240, 240));
         jbtn_mo.setText("Modificar");
         jbtn_mo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,6 +94,8 @@ public class Almacen extends javax.swing.JFrame {
             }
         });
 
+        jbtn_c.setBackground(new java.awt.Color(0, 150, 136));
+        jbtn_c.setForeground(new java.awt.Color(240, 240, 240));
         jbtn_c.setText("Cancelar");
         jbtn_c.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,20 +153,23 @@ public class Almacen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtn_cActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_cActionPerformed
-        Menu m = new Menu();
+        m.cambiarIdioma1(a);
+        m.eleccionmenu=a;
         m.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jbtn_cActionPerformed
 
     private void jbtn_agActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_agActionPerformed
-Agregar a = new Agregar();
-a.setVisible(true);
+Agregar ag = new Agregar();
+ag.setVisible(true);
+ag.cambiarIdioma1(a);
 this.setVisible(false);
     }//GEN-LAST:event_jbtn_agActionPerformed
 //que pedo aqui :v
     private void jbtn_moActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_moActionPerformed
         try {
             Modificar mo = new  Modificar();
+            mo.cambiarIdioma1(a);
             mo.setVisible(true);
             this.setVisible(false);
         } catch (SQLException ex) {
